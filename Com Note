@@ -1,9 +1,9 @@
 Linux常用命令总结
-拨号加7 70 异地：
 小密圈备份
-大数据集群hadoop+hbase+spark+hive
+大数据集群 hadoop+hbase+spark+hive
+iaas_spd@ucloud.cn
 
-Linux 
+Linux
 -----------------
 用户
 useradd
@@ -14,81 +14,113 @@ whereis  查找命令 ·使用不同终端SHELL时候容易出现环境变量不
 exportPATH=$PATH:/usr/bin增加变量
 
 查找
-grep -H 'spring' *.xml 查找所以有的包含 spring 的 xml 文件
-grep 'test' d* 显示所有以 d 开头的文件中包含 test 的行。
-grep 'test' aa bb cc 显示在 aa，bb，cc 文件中匹配 test 的行。
-grep '[a-z]\{5\}' aa 显示所有包含每个字符串至少有 5 个连续小写字符的字符串的行。
-find 路径 -name 文件
-find 路径 -name "*文件*"  模糊匹配~ 
-find . -name "*文件*"  当前目录延伸 
-find 路径 -name "*.c" -exec wc -l {} \; 找出每次匹配文件的行数 大括号是每处理一次继续想下的意思 分号是结束
+	grep -H 'spring' *.xml 查找所有的包含 spring 的 xml 文件
+	grep 'test' d* 显示所有以 d 开头的文件中包含 test 的行。
+	grep 'test' aa bb cc 显示在 aa，bb，cc 文件中匹配 test 的行。
+	grep '[a-z]\{5\}' aa 显示所有包含每个字符串至少有 5 个连续小写字符的字符串的行。
+	grep -r '1' ./ 当前目录所有包含1 的
+	find 路径 -name 文件
+	find 路径 -name "*文件*"  模糊匹配~
+	find . -name "*文件*"  当前目录延伸
+	find 路径 -name "*.c" -exec wc -l {} \; 找出每次匹配文件的行数 大括号是每处理一次继续想下的意思 分号是结束
+
+文件
+more
+    more -s testfile 按页显示文档内东
+    more +20 testfile  从20行开始显示内容
+    Ctrl + B 返回上一页
+    = 当前行号
+less
+    ctrl + F - 向前移动一屏
+	ctrl + B - 向后移动一屏
+	j - 向前移动一行
+	k - 向后移动一行
+	G - 移动到最后一行
+	g - 移动到第一行
+tail
+    默认读文本最后内容
+    tail -f notes.log 实时监控 末尾增长
+    tail +20 notes.log 从20开始到文本
+    tail -20 notes.log 从末尾开始20行
+cat
+	cat 命令用于连接文件并打印到标准输出设备上
+
+
+awk
+	awk '{a[b[$1]++]}END{for(i=length(a);i>0;i--)for(j in b)if(b[j]==i){c++;if(c<=10)print j,i}}' www.dwhd.org_nginx.log 打印前10的IP
 
 进程看查
-ps –ef | grep tomcat 查看所有有关 tomcat 的进程
-ps -ef | grep --color java 高亮要查询的关键字
+	ps –ef | grep tomcat 查看所有有关 tomcat 的进程
+	ps -ef | grep --color java 高亮要查询的关键字
 
 终止线程
-kill -9 19979 终止线程号位 19979 的进程
+	kill -9 19979 终止线程号位 19979 的进程
 
 复制文件操作
-cp source dest 复制文件
-cp -r sourceFolder targetFolder 递归复制整个文件夹
-scp sourecFile romoteUserName@remoteIp:remoteAddr 远程拷贝
+	cp source dest 复制文件
+	cp -r sourceFolder targetFolder 递归复制整个文件夹
+	scp sourecFile romoteUserName@remoteIp:remoteAddr 远程拷贝
 
-目录
-mkdir newfolder 删除目录 rmdir deleteEmptyFolder 删除空目录递归 rm -rf deleteFile 
+目录	mkdir newfolder
+删除目录 rmdir deleteEmptyFolder
+删除空目录递归 rm -rf deleteFile
 
 移动文件
-mv /temp/movefile /targetFolder
+	mv /temp/movefile /targetFolder
 
 修改文件权限
-chmod 777 file.java //file.java 的权限-rwxrwxrwx，r 表示读、w 表示写、x 表示可执行
+	chmod 777 file.java //file.java 的权限-rwxrwxrwx，r 表示读、w 表示写、x 表示可执行
 ≈权限分三组 自己-GROUP-OTHER
 3个字节为一组首位d文件夹-文件
 chomd755  644不带执行的权限
 
 压缩
-tar -czf test.tar.gz /test1 /test2
+	tar -czf test.tar.gz /test1 /test2
 解压
-tar -xvzf test.tar.gz
+	tar -xvzf test.tar.gz
+
 打包与压缩（高效率）
-tar cf  压缩后的文件名.tar 源文件
-tar cjf 压缩后文件名tar.bz2 源文件
+	tar cf  压缩后的文件名.tar 源文件
+	tar cjf 压缩后文件名tar.bz2 源文件
+	
 查看 tar tvf 文件名
 恢复 tar xf 文件名 -C 文件夹
 
-tail 查看文件尾 10 行
-tail -n 10 example.txt
-查看日志类型文件
-tail -f exmaple.log //这个命令会自动显示新增内容，屏幕只显示 10 行内容的（可设置）。
 
-端口  查看端口占用情况
-netstat -tln | grep 8080 查看端口 8080 的使用情况
-查看端口属于哪个程序 
-lsof -i :8080
+端口 查看端口占用情况
+	netstat -tln | grep 8080 查看端口 8080 的使用情况
+查看端口属于哪个程序
+	lsof -i :8080
 查看进程   ps aux|grep java 查看 java 进程
-所有进程   ps aux 
+所有进程   ps aux
 
 diff -r 目录 目录 目录对比
 
->> 输出文件    
+>> 输出文件
 && 前一句语句错误不会执行下一句
-； 前一句语句错误不影响下一句的操作 可以添加后续跟进命令 
+； 前一句语句错误不影响下一句的操作 可以添加后续跟进命令
 |  管道  一个命令的输出 作为另外一个命令的输入 一个前序只完成一个功能
 
 
 键盘操作移动
-ctrl+a	跳转到命令最前面
-ctrl+e	跳转到命令最后面
-alt+b	向前跳转一个单词
-alt+f	向后跳转一个单词
+	ctrl+a: 移动到行首
+	ctrl+e: 移动到行尾
+	ctrl+b: 回移一个字符
+	ctrl+f: 前移一个字符
+	ctrl+r: 搜索历史命令
+	ctrl+p: 上一个命令
+	ctrl+n：下一个命令
+	ctrl+h: 清除前一个字符
+	ctrl+u: 清除当前命令
+	ctrl+l: 清屏，替代 clear 命令
+
 
 替换
-ctrl + t 将光标当前字符与前面一个字符替换
-alt + t 交换两个光标当前所处位置单词和光标前一个单词
-alt + u 把光标当前位置单词变为大写
-alt + l 把光标当前位置单词变为小写
-alt + c 把光标当前位置单词头一个字母变为大写
+	ctrl + t 将光标当前字符与前面一个字符替换
+	alt + t 交换两个光标当前所处位置单词和光标前一个单词
+	alt + u 把光标当前位置单词变为大写
+	alt + l 把光标当前位置单词变为小写
+	alt + c 把光标当前位置单词头一个字母变为大写
 ^oldstr^newstr 替换前一次命令中字符串
 
 
@@ -110,27 +142,29 @@ git pull 获取
 
 VIM
 -----------------
-w ! sudo tee %   vim用root保存
-：set number 行数
-：行数 跳转
-1G 第一行 
-GG 最后一行
-3G 第三行
-v  选中  
-d  删除
-dG 删除全部
-P  粘贴 
-x  删除光标内容
-dd 删除一行
-u  恢复上一步。重复上次操作G从当前到末尾行的缩进j下移一行$到行尾A行尾插入
-y  复制
-n 下一个
+    $ 行首
+    ^ 行尾
+	w ! sudo tee %   vim用root保存
+	：set number 查看行数
+	:2 跳转到第二行
+	1G 第一行
+	GG 最后一行
+	v  选中
+	y  复制
+		yw 拷贝该单词
+	P  粘贴
+	d  删除
+	dG 删除全部
+	x  删除光标内容
+	dd 删除一行
+	u  恢复上一步。重复上次操作G从当前到末尾行的缩进j下移一行$到行尾A行尾插入
+	n  下一个
 数字==  从光标开始  缩进下面多少行
-/pattern 向下？
-pattern  向上
-*  跳到下个光标单位
-N 重复删除
-hjkl   操作f{char}调到当前行的字符
+	/pattern 向下？
+	pattern  向上
+	*  跳到下个光标单位
+	N  重复删除
+	hjkl   操作f{char}调到当前行的字符
 
 命令行操作
 :!ls加上感叹号可以执行外部命令
@@ -160,32 +194,35 @@ vim的分屏
 
 替换
 替换是vi的强项,使用“:s/模式/字符串/标志”进行替换，其中的“模式”是一个正则表达式，可以用来匹配字符串.以下提供几个例子.
-:s/aa/bb/g 将光标所在行出现的所有包含aa的字符串中的aa替换为bb
-:s/\<aa\>/bb/g 将光标所在行出现的所有aa替换为bb,仅替换aa这个单词
-:%s/aa/bb/g 将文档中出现的所有包含aa的字符串中的aa替换为bb
-:12,23s/aa/bb/g 将从12行到23行中出现的所有包含aa的字符串中的aa替换为bb
-:12,23s/^/#/ 将从12行到23行的行首加入#字符
-:%s=*$== 将所有行尾多余的空格删除
-:%s/\s\+$// 将所有行尾多余的空格删除
-:g/^\s*$/d 将所有不包含字符(空格也不包含)的空行删除
-:%s/\(\s*\n\)\+/\r/ 将所有不包含字符(空格也不包含)的空行删除.
-:%s!\s*//.*!! 去掉所有的“//”注释
+	:s/aa/bb/g 将光标所在行出现的所有包含aa的字符串中的aa替换为bb
+	:s/\<aa\>/bb/g 将光标所在行出现的所有aa替换为bb,仅替换aa这个单词
+	:%s/aa/bb/g 将文档中出现的所有包含aa的字符串中的aa替换为bb
+	:12,23s/aa/bb/g 将从12行到23行中出现的所有包含aa的字符串中的aa替换为bb
+	:12,23s/^/#/ 将从12行到23行的行首加入#字符
+	:%s=*$== 将所有行尾多余的空格删除
+	:%s/\s\+$// 将所有行尾多余的空格删除
+	:g/^\s*$/d 将所有不包含字符(空格也不包含)的空行删除
+	:%s/\(\s*\n\)\+/\r/ 将所有不包含字符(空格也不包含)的空行删除.
+	:%s!\s*//.*!! 去掉所有的“//”注释
+
+文件
+
 
 例子
-yw  表示拷贝从当前光标到光标所在单词结尾的内容.
-dw  表示删除从当前光标到光标所在单词结尾的内容.
-daw  表示删除光标所在的单词，不管光标在此单词那一位置
-y0  表示拷贝从当前光标到光标所在行首的内容.
-d0  表示删除从当前光标到光标所在行首的内容.
-y$  表示拷贝从当前光标到光标所在行尾的内容.
-d$[D]  表示删除从当前光标到光标所在行尾的内容.
-5dd[d5d]  表示删除光标以下5行.
-:12,24y  表示拷贝第12行到第24行之间的内容.
-:12,y  表示拷贝第12行到光标所在行之间的内容.
-:,24y  表示拷贝光标所在行到第24行之间的内容.删除类似.
-5fx  表示查找光标后第5个x字符.
-5w(e)  移动光标到下五个单词的头部(尾部).
-:sp(:vsp) 文件名vim将分割出一个横(纵)向窗口,并在该窗口中打开新文件.
+	yw  表示拷贝从当前光标到光标所在单词结尾的内容.
+	dw  表示删除从当前光标到光标所在单词结尾的内容.
+	daw  表示删除光标所在的单词，不管光标在此单词那一位置
+	y0  表示拷贝从当前光标到光标所在行首的内容.
+	d0  表示删除从当前光标到光标所在行首的内容.
+	y$  表示拷贝从当前光标到光标所在行尾的内容.
+	d$[D]  表示删除从当前光标到光标所在行尾的内容.
+	5dd[d5d]  表示删除光标以下5行.
+	:12,24y  表示拷贝第12行到第24行之间的内容.
+	:12,y  表示拷贝第12行到光标所在行之间的内容.
+	:,24y  表示拷贝光标所在行到第24行之间的内容.删除类似.
+	5fx  表示查找光标后第5个x字符.
+	5w(e)  移动光标到下五个单词的头部(尾部).
+	:sp(:vsp) 文件名vim将分割出一个横(纵)向窗口,并在该窗口中打开新文件.
 
 备注：VIM比较复杂，所以一般需要一个伟大的前人做好的配置环境，我用的是这个
 Link: https://github.com/Depth-/dot-vimrc
